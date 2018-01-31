@@ -7,7 +7,7 @@ public class Version {
                             MINOR = 0,
                             SUPER_MINOR = 1,
                             BUILD = 0;
-    public static final boolean SNAPSHOT = false;
+    public static final boolean SNAPSHOT = true;
 
     public static String getVersion(){
         return MAJOR + "." + MINOR + "." + SUPER_MINOR + (SNAPSHOT ? " SNAPSHOT" : "");
