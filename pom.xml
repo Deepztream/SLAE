@@ -1,4 +1,5 @@
 <project>
+    <name>SLAE</name>
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.deepztream</groupId>
     <artifactId>slae</artifactId>
@@ -15,7 +16,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>${project.groupId}.${project.artifactId}.Engine</mainClass>
+                            <mainClass>${project.groupId}.${project.artifactId}.SLAE</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
