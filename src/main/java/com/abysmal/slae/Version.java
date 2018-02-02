@@ -1,4 +1,4 @@
-package com.deepztream.slae;
+package com.abysmal.slae;
 
 /** Class for getting the current version of SLAE */
 public class Version {

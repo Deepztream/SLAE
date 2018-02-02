@@ -1,7 +1,7 @@
 <project>
     <name>SLAE</name>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.deepztream</groupId>
+    <groupId>com.abysmal</groupId>
     <artifactId>slae</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
@@ -10,21 +10,6 @@
         <outputDirectory>target/classes</outputDirectory>
         <finalName>${project.artifactId}-${project.version}</finalName>
         <testOutputDirectory>target/test-classes</testOutputDirectory>
-        <plugins>
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <mainClass>${project.groupId}.${project.artifactId}.SLAE</mainClass>
-                        </manifest>
-                    </archive>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                </configuration>
-            </plugin>
-        </plugins>
     </build>
 
     <properties>
