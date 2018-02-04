@@ -1,4 +1,4 @@
-package com.abysmal.slae.util;
+package com.abysmal.slae.util.datastructure;
 
 import java.util.ArrayList;
 

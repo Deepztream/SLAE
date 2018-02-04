@@ -3,7 +3,7 @@ package com.abysmal.slae.message;
 import java.util.ArrayList;
 
 import com.abysmal.slae.system.System;
-import com.abysmal.slae.util.Queue;
+import com.abysmal.slae.util.datastructure.Queue;
 
 public class MessageBus {
 
