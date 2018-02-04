@@ -4,7 +4,7 @@ public class AlreadyInitialisedException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
-	public AlreadyInitialisedException(String msg){
+	public AlreadyInitialisedException(String msg) {
 		super(msg);
 	}
 
