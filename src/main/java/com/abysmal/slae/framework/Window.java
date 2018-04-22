@@ -63,7 +63,7 @@ public class Window {
 
 		window.windowID = glfwCreateWindow(window.width, window.height, window.title,
 				window.fullscreen ? monitor : NULL, NULL);
-
+		
 		if (window.windowID == NULL) {
 			throw new RuntimeException("Failed to create GLFW window");
 		}
@@ -132,5 +132,8 @@ public class Window {
 	public interface RenderCallbackI {
 		public void render(long windowID);
 	}
-
+	
+	public static long getWindowID() {
+		return Window.window.windowID;
+	}
 }

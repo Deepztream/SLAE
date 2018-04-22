@@ -3,7 +3,6 @@ package com.abysmal.slae.system;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
-import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,11 +42,6 @@ public class Render implements System {
 			Object[] o = (Object[]) message.getData();
 			addSceneObject((int) o[0], (GUIObject) o[1]);
 		}
-	}
-
-	@Deprecated
-	public static void addSceneObjectStatic(int sceneID, Object object) {
-		renderer.addSceneObject(sceneID, object);
 	}
 
 	private void addSceneObject(int sceneID, Object object) {

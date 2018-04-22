@@ -1,6 +1,6 @@
 package com.abysmal.slae.object;
 
-import java.nio.FloatBuffer;
+import java.awt.Color;
 
 import com.abysmal.slae.system.Render.IndexBuffer;
 import com.abysmal.slae.system.Render.Shader;
@@ -26,6 +26,11 @@ public class GUIObject {
 
 	public GUIObject(Rectanglef r, Vector3f color, String shader) {
 		this(r, new Vector3f[] { color }, shader);
+	}
+
+	public GUIObject(Rectanglef r, Color colour, String shader) {
+		this(r, new Vector3f[] {
+				new Vector3f(colour.getRed() / 255f, colour.getGreen() / 255f, colour.getBlue() / 255f) }, shader);
 	}
 
 	public GUIObject(Rectanglef r, Vector3f[] c, String shader) {

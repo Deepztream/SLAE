@@ -11,11 +11,11 @@ public class Console implements System {
 		if (message.getData() == null) {
 			java.lang.System.out.println("[" + message.getMessage() + "]");
 		} else if (message.getData().getClass().isArray()) {
-			java.lang.System.out.println(
-					"[" + message.getMessage() + "] " + Arrays.toString((Object[]) message.getData()).toString());
+			java.lang.System.out
+					.println((message.getMessage().toLowerCase() == "print" ? "[" + message.getMessage() + "] " : "")
+							+ Arrays.toString((Object[]) message.getData()).toString());
 		} else {
 			java.lang.System.out.println("[" + message.getMessage() + "] " + message.getData().toString());
 		}
 	}
-
 }

@@ -12,6 +12,10 @@ public class Queue<T> {
 		T result = queue.remove(0);
 		return result;
 	}
+	
+	public boolean hasNext() {
+		return !queue.isEmpty();
+	}
 
 	public void add(T data) {
 		queue.add(data);
