@@ -38,9 +38,14 @@ public class Render implements System {
 
 	@Override
 	public void handleMessage(Message message) {
-		if (message.getMessage().equalsIgnoreCase("add guiobject")) {
+		switch (message.getMessage().toLowerCase()) {
+		case "add guiobject":
 			Object[] o = (Object[]) message.getData();
 			addSceneObject((int) o[0], (GUIObject) o[1]);
+			break;
+		case "switch scene":
+			current_scene = (int) message.getData();
+			break;
 		}
 	}
 

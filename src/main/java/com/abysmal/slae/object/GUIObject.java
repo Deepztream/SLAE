@@ -2,6 +2,7 @@ package com.abysmal.slae.object;
 
 import java.awt.Color;
 
+import com.abysmal.slae.framework.Window;
 import com.abysmal.slae.system.Render.IndexBuffer;
 import com.abysmal.slae.system.Render.Shader;
 import com.abysmal.slae.system.Render.VertexArray;
@@ -25,7 +26,7 @@ public class GUIObject {
 	private String shader;
 
 	public GUIObject(Rectanglef r, Vector3f color, String shader) {
-		this(r, new Vector3f[] {  }, shader);
+		this(r, new Vector3f[] {}, shader);
 	}
 
 	public GUIObject(Rectanglef r, Color colour, String shader) {
@@ -36,8 +37,11 @@ public class GUIObject {
 	public GUIObject(Rectanglef r, Vector3f[] c, String shader) {
 		if (c.length < 4)
 			c = new Vector3f[] { c[0], c[0], c[0], c[0] };
-		this.vertexBuffer = new float[] { r.minX, r.minY, c[0].x, c[0].y, c[0].z, r.minX, r.maxY, c[1].x, c[1].y,
-				c[1].z, r.maxX, r.maxY, c[2].x, c[2].y, c[2].z, r.maxX, r.minY, c[3].x, c[3].y, c[3].z };
+		this.vertexBuffer = new float[] { r.minX / Window.getWidth() * 2 - 1, -r.minY / Window.getHeight() * 2 + 1,
+				c[0].x, c[0].y, c[0].z, r.minX / Window.getWidth() * 2 - 1, -r.maxY / Window.getHeight() * 2 + 1,
+				c[1].x, c[1].y, c[1].z, r.maxX / Window.getWidth() * 2 - 1, -r.maxY / Window.getHeight() * 2 + 1,
+				c[2].x, c[2].y, c[2].z, r.maxX / Window.getWidth() * 2 - 1, -r.minY / Window.getHeight() * 2 + 1,
+				c[3].x, c[3].y, c[3].z };
 		this.shader = shader;
 	}
 
