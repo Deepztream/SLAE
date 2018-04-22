@@ -9,6 +9,7 @@ import com.abysmal.slae.Configuration;
 import com.abysmal.slae.Version;
 import com.abysmal.slae.exception.AlreadyInitialisedException;
 
+import org.joml.Vector2d;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
@@ -20,9 +21,9 @@ public class Window {
 
 	private long windowID = NULL;
 	private int height, width;
-	private double aspectRatio = 16.0 / 9.0;
+	private double aspectRatio;
 	private String title = "SLAE " + Version.MAJOR + "." + Version.MINOR + "." + Version.SUPER_MINOR;
-	private boolean fullscreen = false;
+	private boolean fullscreen;
 	private RenderCallbackI renderCallback = null;
 
 	private static Window window = new Window();
@@ -134,6 +135,18 @@ public class Window {
 	}
 	
 	public static long getWindowID() {
-		return Window.window.windowID;
+		return window.windowID;
+	}
+	
+	public static int getWidth() {
+		return window.width;
+	}
+	
+	public static int getHeight() {
+		return window.height;
+	}
+	
+	public static Vector2d getSize() {
+		return new Vector2d(getWidth(), getHeight());
 	}
 }

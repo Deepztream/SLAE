@@ -22,10 +22,10 @@ public class HUD implements System {
 				}
 				if (Input.inputQueue.hasNext()) {
 					MouseAction click = Input.inputQueue.next();
-					if (click.window == Window.getWindowID() && click.action == 0)
+					if (click.window == Window.getWindowID())
 						for (HUDObject HUD : HUDObjects)
 							if (HUD.inside(click.pos)) {
-								HUD.click();
+								HUD.click(click.button, click.action, click.mods);
 								break;
 							}
 				}

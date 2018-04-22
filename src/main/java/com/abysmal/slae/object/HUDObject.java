@@ -1,23 +1,21 @@
 package com.abysmal.slae.object;
 
-import com.abysmal.slae.util.Callback;
-
 import org.joml.Vector2d;
 import org.joml.Vector2i;
 
 public class HUDObject {
 
 	Vector2i a, b;
-	Callback callback;
+	ButtonCallback callback;
 
-	public HUDObject(Vector2i a, Vector2i b, Callback callback) {
+	public HUDObject(Vector2i a, Vector2i b, ButtonCallback callback) {
 		this.a = a;
 		this.b = b;
 		this.callback = callback;
 	}
 
-	public void click() {
-		callback.call();
+	public void click(int button, int action, int mods) {
+		callback.call(button, action, mods);
 	}
 
 	public boolean inside(Vector2d point) {
@@ -25,5 +23,9 @@ public class HUDObject {
 			if (point.x < b.x && point.y < b.y)
 				return true;
 		return false;
+	}
+
+	public interface ButtonCallback {
+		public void call(int button, int action, int mods);
 	}
 }

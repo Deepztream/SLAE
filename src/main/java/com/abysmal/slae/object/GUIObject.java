@@ -25,7 +25,7 @@ public class GUIObject {
 	private String shader;
 
 	public GUIObject(Rectanglef r, Vector3f color, String shader) {
-		this(r, new Vector3f[] { color }, shader);
+		this(r, new Vector3f[] {  }, shader);
 	}
 
 	public GUIObject(Rectanglef r, Color colour, String shader) {
