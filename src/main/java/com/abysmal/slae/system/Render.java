@@ -1,8 +1,12 @@
 package com.abysmal.slae.system;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,6 +14,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.imageio.ImageIO;
 import javax.lang.model.type.UnknownTypeException;
 
 import com.abysmal.slae.framework.Scene;
@@ -17,6 +22,8 @@ import com.abysmal.slae.message.Message;
 import com.abysmal.slae.object.GUIObject;
 import com.abysmal.slae.object.GameObject;
 
+import org.lwjgl.BufferUtils;
+import org.lwjgl.opengl.GL13;
 import org.lwjgl.system.MemoryUtil;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -38,10 +45,15 @@ public class Render implements System {
 
 	@Override
 	public void handleMessage(Message message) {
+		Object[] o;
 		switch (message.getMessage().toLowerCase()) {
 		case "add guiobject":
-			Object[] o = (Object[]) message.getData();
-			addSceneObject((int) o[0], (GUIObject) o[1]);
+			o = (Object[]) message.getData();
+			addSceneObject((int) o[0], o[1]);
+			break;
+		case "add gameobject":
+			o = (Object[]) message.getData();
+			addSceneObject((int) o[0], o[1]);
 			break;
 		case "switch scene":
 			current_scene = (int) message.getData();
@@ -153,7 +165,7 @@ public class Render implements System {
 		private int stride = 0;
 
 		public void push(int type, int count) {
-			vertexBufferLayout.add(new VertexBufferElement(type, count, (type == GL_FLOAT)));
+			vertexBufferLayout.add(new VertexBufferElement(type, count, (type == GL_FLOAT))); // TODO: add more datatypes
 			stride += count * sizeOf(type);
 		}
 
@@ -253,6 +265,14 @@ public class Render implements System {
 			}
 			return new String[] { vs.toString(), fs.toString() };
 		}
+		
+		public void setUniform1i(String name, int val) {
+			glUniform1i(glGetUniformLocation(shader, name), val);
+		}
+		
+		public void setUniform4f(String name, float val1, float val2, float val3, float val4){
+			glUniform4f(glGetUniformLocation(shader, name), val1, val2, val3, val4);
+		}
 	}
 
 	private static int sizeOf(int type) {
@@ -271,5 +291,54 @@ public class Render implements System {
 			return 1;
 		}
 		throw new UnknownTypeException(null, null);
+	}
+
+	public static class Texture {
+
+		int id;
+
+		public Texture(String imagePath) {
+			BufferedImage bi;
+			int width, height;
+			try {
+				bi = ImageIO.read(new File(imagePath));
+				width = bi.getWidth();
+				height = bi.getHeight();
+
+				int[] pixels_raw = new int[width * height];
+				pixels_raw = bi.getRGB(0, 0, width, height, null, 0, width);
+
+				ByteBuffer pixels = BufferUtils.createByteBuffer(width * height * 4);
+
+				for (int y = 0; y < height; y++) {
+					for (int x = 0; x < width; x++) {
+						int pixel = pixels_raw[y * width + x];
+						pixels.put((byte) (pixel >> 16 & 0xFF)); // Red
+						pixels.put((byte) (pixel >> 8 & 0xFF)); // Green
+						pixels.put((byte) (pixel & 0xFF)); // Blue
+						pixels.put((byte) (pixel >> 24 & 0xFF)); // Alpha
+					}
+				}
+
+				pixels.flip();
+
+				id = glGenTextures();
+				glBindTexture(GL_TEXTURE_2D, id);
+
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+
+				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		public void bind(int slot) {
+			GL13.glActiveTexture(GL13.GL_TEXTURE0 + slot);
+			glBindTexture(GL_TEXTURE_2D, id);
+		}
 	}
 }

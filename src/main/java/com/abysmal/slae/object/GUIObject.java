@@ -1,6 +1,7 @@
 package com.abysmal.slae.object;
 
 import java.awt.Color;
+import java.awt.Polygon;
 
 import com.abysmal.slae.framework.Window;
 import com.abysmal.slae.system.Render.IndexBuffer;
@@ -42,6 +43,21 @@ public class GUIObject {
 				c[1].x, c[1].y, c[1].z, r.maxX / Window.getWidth() * 2 - 1, -r.maxY / Window.getHeight() * 2 + 1,
 				c[2].x, c[2].y, c[2].z, r.maxX / Window.getWidth() * 2 - 1, -r.minY / Window.getHeight() * 2 + 1,
 				c[3].x, c[3].y, c[3].z };
+		this.shader = shader;
+	}
+
+	public GUIObject(Polygon p, Color colour, String shader) {
+		Vector3f c = new Vector3f(colour.getRed() / 255f, colour.getGreen() / 255f, colour.getBlue() / 255f);
+
+		this.vertexBuffer = new float[p.npoints * 5];
+		for (int i = 0; i < this.vertexBuffer.length; i += 5) {
+			this.vertexBuffer[i + 0] = p.xpoints[i / 5] / ((float) Window.getWidth()) * 2f - 1;
+			this.vertexBuffer[i + 1] = -p.ypoints[i / 5] / ((float) Window.getHeight()) * 2f + 1;
+			this.vertexBuffer[i + 2] = c.x - (i == 5 ? .5f : 0);
+			this.vertexBuffer[i + 3] = c.y - (i == 10 ? .5f : 0);
+			this.vertexBuffer[i + 4] = c.z - (i == 15 ? .5f : 0);
+		}
+
 		this.shader = shader;
 	}
 

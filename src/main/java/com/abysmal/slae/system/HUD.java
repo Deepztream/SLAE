@@ -31,13 +31,15 @@ public class HUD implements System {
 							clicked.click(0, 0, click.mods);
 							clicked = null;
 						}
-						for (HUDObject HUD : scenes.get(current_scene))
-							if (HUD.inside(click.pos)) {
-								HUD.click(click.button, click.action, click.mods);
-								if (click.action == 1)
-									clicked = HUD;
-								break;
-							}
+						if (scenes.containsKey(current_scene)) {
+							for (HUDObject HUD : scenes.get(current_scene))
+								if (HUD.inside(click.pos)) {
+									HUD.click(click.button, click.action, click.mods);
+									if (click.action == 1)
+										clicked = HUD;
+									break;
+								}
+						}
 					}
 				}
 			}
@@ -48,7 +50,8 @@ public class HUD implements System {
 	public void handleMessage(Message message) {
 		switch (message.getMessage().toLowerCase()) {
 		case "add hudobject":
-			if (!scenes.containsKey((int) ((Object[]) message.getData())[0])) scenes.put((int) ((Object[]) message.getData())[0], new ArrayList<HUDObject>());
+			if (!scenes.containsKey((int) ((Object[]) message.getData())[0]))
+				scenes.put((int) ((Object[]) message.getData())[0], new ArrayList<HUDObject>());
 			scenes.get((int) ((Object[]) message.getData())[0]).add((HUDObject) ((Object[]) message.getData())[1]);
 			break;
 		case "slae init":

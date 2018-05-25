@@ -8,9 +8,11 @@ import com.abysmal.slae.exception.AlreadyInitialisedException;
 import com.abysmal.slae.framework.Window;
 import com.abysmal.slae.framework.Input;
 import com.abysmal.slae.message.Message;
+import com.abysmal.slae.system.Client;
 import com.abysmal.slae.system.Console;
 import com.abysmal.slae.system.HUD;
 import com.abysmal.slae.system.Render;
+import com.abysmal.slae.system.Server;
 import com.abysmal.slae.system.System;
 
 import org.lwjgl.opengl.GL11;
@@ -31,6 +33,8 @@ public class SLAE {
 		getBus().addSystem(game);
 		getBus().addSystem(new Console());
 		getBus().addSystem(new HUD());
+		getBus().addSystem(new Server());
+		getBus().addSystem(new Client());
 		Render.init();
 		new Thread(() -> {
 			Window.createWindow();
@@ -54,7 +58,7 @@ public class SLAE {
 		}, "SLAE OpenGL").start();
 		
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(2000);
 		} catch (Exception e) {
 		}
 		Set<Thread> threadSet = Thread.getAllStackTraces().keySet();
@@ -62,6 +66,8 @@ public class SLAE {
 			if (t.getName().contains("SLAE"))
 				java.lang.System.out.println(t.getName());
 		}
+		
+		getBus().postMessage(new Message("Send", "Nibbay"));
 	}
 
 	public static boolean isRunning() {
